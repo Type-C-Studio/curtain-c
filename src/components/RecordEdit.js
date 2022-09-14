@@ -1,7 +1,7 @@
 const RecordEdit = () => {
     return(
         <div>
-            record
+            record Ei Ei
         </div>
     )
 }
