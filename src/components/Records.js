@@ -88,48 +88,43 @@ const Records = () => {
         },
       ]; // rowSelection object indicates the need for row selection
       
-      const rowSelection = {
-        onChange: (selectedRowKeys, selectedRows) => {
-          console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-        }
+     
        
-      };
+      
     
 
 return(
     <div style={{textAlign: "center"}}>
-         <Navbar className="color-nav" variant="light" >
-        <Container >
-          <Navbar.Brand  href="#home" style={{color: "white"}}>
-            <img
-              alt=""
-              src={mainLogo}
-              width="30"
-              height="30"
-              className="d-inline-block align-top"
-            />{' '}
-            Curtain-C @ Mantarin-Haus
-          </Navbar.Brand>
-        </Container>
-      </Navbar>
-
+         
       <div>
      
 
       <Divider />
-
+      <Button
+          style={{
+            fontWeight: "bold",
+            float: "right",
+            borderTopLeftRadius: 4,
+            borderTopRightRadius: 4,
+            borderBottomLeftRadius: 4,
+            borderBottomRightRadius: 4,
+            color: "white",
+            backgroundColor: "#24CE2A",
+          }}
+          type="link"
+          href="/records/new"
+        >
+          New
+        </Button>
       <Table
-        rowSelection={{
-        
-          ...rowSelection,
-        }}
+      
         columns={columns}
         dataSource={data}
       
       />
     </div>
 
-
+  
       
     </div>
 )
