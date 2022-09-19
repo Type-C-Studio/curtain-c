@@ -1,4 +1,4 @@
-import {Button,Input} from 'antd';
+
 
 const Records_new = () => {
     return(
@@ -6,10 +6,7 @@ const Records_new = () => {
             New Record
             <Button>ลูกค้าเก่า</Button><br/>
             <Button>ลูกค้าใหม่</Button><br/>
-            <div>
-            <Input size="large" placeholder="Input Area Width" />
-            <Input size="large" placeholder="Input Area Height" />
-            </div>
+            
         </div>
     )
 }
