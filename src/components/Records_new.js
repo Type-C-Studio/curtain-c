@@ -32,7 +32,7 @@ const Records_new = () => {
             Old Record
             <Button>ลูกค้าเก่า</Button><br/>
             </Card >
-            <Card title="Exsiting Data" style={{ width: 300 }}>
+            <Card title="New Data" style={{ width: 300 }}>
             New Record
             <Button>ลูกค้าใหม่</Button><br/>
             </Card >
