@@ -1,13 +1,13 @@
-import {Button,Input,Card,Divider,Select, Space,} from 'antd';
-import { Container } from 'react-bootstrap';
-import React, { useState, useRef } from 'react';
-import { PlusOutlined } from '@ant-design/icons';
+import { Button, Input, Divider, Select, Space, Form } from "antd";
+import { Container, Card } from "react-bootstrap";
+import React, { useState, useRef } from "react";
+import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 const { Option } = Select;
 let index = 0;
 
 const Records_new = () => {
-  const [items, setItems] = useState(['2.4', '2.5']);
-  const [name, setName] = useState('');
+  const [items, setItems] = useState(["2.4", "2.5"]);
+  const [name, setName] = useState("");
   const inputRef = useRef(null);
 
   const onNameChange = (event) => {
@@ -17,71 +17,137 @@ const Records_new = () => {
   const addItem = (e) => {
     e.preventDefault();
     setItems([...items, name || `New item ${index++}`]);
-    setName('');
+    setName("");
     setTimeout(() => {
       inputRef.current?.focus();
     }, 0);
   };
+  const onFinish = (values) => {
+    console.log("Received values of form:", values);
+  };
+  return (
+    <div>
+      <Container>
+        <Form
+          name="dynamic_form_nest_item"
+          onFinish={onFinish}
+          autoComplete="off"
+        >
+          <Form.List name="rooms">
+            {(fields, { add, remove }) => (
+              <>
+                {fields.map(({ key, name, ...restField }) => (
+                  <Space
+                    key={key}
+                    style={{
+                      display: "flex",
+                      marginBottom: 8,
+                    }}
+                    align="baseline"
+                  >
+                    <Card style={{ width: "18rem" }}>
+                      <Card.Body>
+                        <Card.Title>
+                          <Form.Item {...restField} name={[name, "room"]}>
+                            <Input
+                              placeholder="Room"
+                              style={{
+                                width: "60%",
+                              }}
+                            />
+                          </Form.Item>
+                        </Card.Title>
+
+                        <Form.List name="details">
+            {(fields, { add, remove }) => (
+              <>
+                {fields.map(({ key, name, ...restField }) => (
+                  <Space
+                    key={key}
+                    style={{
+                      display: "flex",
+                      marginBottom: 8,
+                    }}
+                    align="baseline"
+                  >
+                    <Card style={{ width: "18rem" }}>
+                      <Card.Body>
+                        <Card.Title>
+                          <Form.Item {...restField} name={[name, "detail"]}>
+                            <Input
+                              placeholder="Room"
+                              style={{
+                                width: "60%",
+                              }}
+                            />
+                          </Form.Item>
+                        </Card.Title>
+                        <Card.Footer>
+                          <Button
+                            onClick={() => remove(name)}
+                            style={{ float: "right" }}
+                          >
+                            Remove room
+                          </Button>
+                        </Card.Footer>
+                      </Card.Body>
+                    </Card>
+                  </Space>
+                ))}
+
+                <Button
+                  className="color-nav"
+                  onClick={() => add()}
+                  icon={<PlusOutlined />}
+                >
+                  Room
+                </Button>
+              </>
+            )}
+          </Form.List>
 
 
-  return(
-      <div style={{textAlign: "center"}}>
-          <Container>
-              <Card title="Exsiting Data" style={{ width: 300 }}>
-          Old Record
-          <Button>ลูกค้าเก่า</Button><br/>
-          </Card >
-          <Card title="New Data" style={{ width: 300 }}>
-          New Record
-          <Button>ลูกค้าใหม่</Button><br/>
-          </Card >
-            
-            
-            <Card title="Room" style={{ width: 300 }}>
-                <Input placeholder="Input Area Width" /> 
-                <Input placeholder="Input Area Height" />
-            </Card>
-            <Card title="Select Hide of Textile" style={{ width: 300 }}>
-            <Select
-      style={{
-        width: 300,
-      }}
-      placeholder="custom dropdown render"
-      dropdownRender={(menu) => (
-        <>
-          {menu}
-          <Divider
-            style={{
-              margin: '8px 0',
-            }}
-          />
-          <Space
-            style={{
-              padding: '0 8px 4px',
-            }}
-          >
-            <Input
-              placeholder="Please enter item"
-              ref={inputRef}
-              value={name}
-              onChange={onNameChange}
-            />
-            <Button type="text" icon={<PlusOutlined />} onClick={addItem}>
-              Add item
+
+
+
+
+
+
+                        <Card.Footer>
+                          <Button
+                            onClick={() => remove(name)}
+                            style={{ float: "right" }}
+                          >
+                            Remove room
+                          </Button>
+                        </Card.Footer>
+                      </Card.Body>
+                    </Card>
+                  </Space>
+                ))}
+
+                <Button
+                  className="color-nav"
+                  onClick={() => add()}
+                  icon={<PlusOutlined />}
+                >
+                  Room
+                </Button>
+              </>
+            )}
+          </Form.List>
+
+
+          
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+              Overview
             </Button>
-          </Space>
-        </>
-      )}
-    >
-      {items.map((item) => (
-        <Option key={item}>{item}</Option>
-      ))}
-    </Select>
+          </Form.Item>
+        </Form>
+      </Container>
+    </div>
+  );
+};
 
-            </Card>
-            </Container>
-            </div>
-    )
-}
-
-export default Records_new ;
+export default Records_new;
