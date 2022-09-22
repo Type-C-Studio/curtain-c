@@ -25,14 +25,58 @@ const Records_new = () => {
   const onFinish = (values) => {
     console.log("Received values of form:", values);
   };
+
+  const onFinish2 = (values) => {
+    console.log("Received values of form:", values);
+  };
   return (
     <div>
+     
       <Container>
         <Form
           name="dynamic_form_nest_item"
           onFinish={onFinish}
           autoComplete="off"
         >
+          
+
+           <div  style={{textAlign: "left"}}>
+           <h3>Customer</h3>
+            <label>Name</label>
+            <Form.Item name="customer_name" >
+              <Input placeholder="name" className="form-control mt-1"/>
+            </Form.Item>
+
+            <label>Address</label>
+            <Form.Item name="customer_address" >
+              <Input placeholder="address" className="form-control mt-1"/>
+            </Form.Item>
+
+            <label>Tel</label>
+            <Form.Item name="customer_tel" >
+              <Input placeholder="tel" className="form-control mt-1"/>
+            </Form.Item>
+
+            <label>Email</label>
+            <Form.Item name="customer_email" >
+              <Input placeholder="email" className="form-control mt-1"/>
+            </Form.Item>
+
+            <label>Company</label>
+            <Form.Item name="customer_company" >
+              <Input placeholder="company" className="form-control mt-1"/>
+            </Form.Item>
+
+            <label>Tax</label>
+            <Form.Item name="customer_tax" >
+              <Input placeholder="tax" className="form-control mt-1"/>
+            </Form.Item>
+
+          </div>
+
+          
+
+
           <Form.List name="rooms">
             {(fields, { add, remove }) => (
               <>
@@ -145,7 +189,9 @@ const Records_new = () => {
             </Button>
           </Form.Item>
         </Form>
+      
       </Container>
+      
     </div>
   );
 };
