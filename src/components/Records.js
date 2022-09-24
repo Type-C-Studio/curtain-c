@@ -1,106 +1,85 @@
-import {Navbar, Container} from 'react-bootstrap';
-import mainLogo from'../photos/Mantarin_haus_logo.png';
-import { Divider, Radio, Table, Button} from 'antd';
-import React, { useState } from 'react';
+import { Divider, Table, Button } from "antd";
+import React, { useEffect, useState } from "react";
 import { FormOutlined } from "@ant-design/icons";
-
+import axios from "axios";
+import moment from "moment";
 
 const Records = () => {
-    const [id, setId] = useState();
-    const columns = [
-        {
-          title: 'Name',
-          dataIndex: 'name',
-          render: (text) => <a href="#">{text}</a>,
-        },
-        {
-          title: 'Date',
-          dataIndex: 'date',
-          sorter: (a, b) => a.date - b.date
-        },
-        {
-          title: 'Status',
-          dataIndex: 'status',
-          render: (text) => text === "Success" ? ( <div
+  const [data, setData] = useState();
+
+  useEffect(() => {
+    axios.get("http://rhome19.thddns.net:5524/api/jobs").then((res) => {
+      setData(res.data);
+    });
+  }, []);
+  const [id, setId] = useState();
+  const columns = [
+    {
+      title: "Name",
+      dataIndex: "customer_name",
+      render: (text) => <a href="#">{text}</a>,
+    },
+    {
+      title: "Date",
+      dataIndex: "date",
+      sorter: (a, b) => a.date - b.date,
+      render: (date) => moment(date).format("DD/MM/YYYY"),
+    },
+    {
+      title: "Status",
+      dataIndex: "status",
+      render: (text) =>
+        text === "success" ? (
+          <div
             style={{
-                backgroundColor: "#8cfac1",
-                color: "#1d8e33",
-                textAlign: "center",
-                borderRadius: 15,
+              backgroundColor: "#8cfac1",
+              color: "#1d8e33",
+              textAlign: "center",
+              borderRadius: 15,
             }}
           >
-            {text} 
-          </div>) : text === "Processing" ? (
-              <div
-              style={{
-                backgroundColor: "#ffc471",
-                color: "#a76e10",
-                textAlign: "center",
-                borderRadius: 15,
-              }}
-            >
-              {text}
-            </div>) : (<div
-              style={{
-                backgroundColor: "#dbdbdb",
-                color: "#6e6e6e",
-                textAlign: "center",
-                borderRadius: 15,
-              }}
-            >
-              {text}
-            </div>)
-        },
-        {
-            render: (rec) => (<Button
-                style={{ color: "#286efb" }}
-               
-                icon={<FormOutlined />}
-                type="link"
-               
-              ></Button>)
-        }
-      ];
-      const data = [
-        {
-          key: '1',
-          name: 'John Brown',
-          date: "20/09/2022",
-          status: 'Canceled',
-        },
-        {
-          key: '2',
-          name: 'Jim Green',
-          date: "20/09/2021",
-          status: 'Processing',
-        },
-        {
-          key: '3',
-          name: 'Joe Black',
-          date: "18/09/2022",
-          status: 'Success',
-        },
-        {
-          key: '4',
-          name: 'Disabled User',
-          date: "22/08/2022",
-          status: 'Success',
-        },
-      ]; // rowSelection object indicates the need for row selection
-      
-     
-       
-      
-    
+            {text}
+          </div>
+        ) : text === "Processing" ? (
+          <div
+            style={{
+              backgroundColor: "#ffc471",
+              color: "#a76e10",
+              textAlign: "center",
+              borderRadius: 15,
+            }}
+          >
+            {text}
+          </div>
+        ) : (
+          <div
+            style={{
+              backgroundColor: "#dbdbdb",
+              color: "#6e6e6e",
+              textAlign: "center",
+              borderRadius: 15,
+            }}
+          >
+            {text}
+          </div>
+        ),
+    },
+    {
+      render: (rec) => (
+        <Button
+          style={{ color: "#286efb" }}
+          icon={<FormOutlined />}
+          type="link"
+        ></Button>
+      ),
+    },
+  ];
 
-return(
-    <div style={{textAlign: "center"}}>
-         
+  return (
+    <div style={{ textAlign: "center" }}>
       <div>
-     
-
-      <Divider />
-      <Button
+        <Divider />
+        <Button
           style={{
             fontWeight: "bold",
             float: "right",
@@ -116,17 +95,9 @@ return(
         >
           New
         </Button>
-      <Table
-      
-        columns={columns}
-        dataSource={data}
-      
-      />
+        <Table columns={columns} dataSource={data} />
+      </div>
     </div>
-
-  
-      
-    </div>
-)
-}
+  );
+};
 export default Records;
