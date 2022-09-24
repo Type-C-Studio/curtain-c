@@ -70,6 +70,7 @@ const Records = () => {
           style={{ color: "#286efb" }}
           icon={<FormOutlined />}
           type="link"
+          href={`/record/edit/${rec.id}`}
         ></Button>
       ),
     },
