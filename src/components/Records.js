@@ -1,11 +1,17 @@
-import { Divider, Table, Button } from "antd";
+import { Divider, Table, Button, Popconfirm, message } from "antd";
 import React, { useEffect, useState } from "react";
-import { FormOutlined } from "@ant-design/icons";
+import { FormOutlined, DeleteOutlined } from "@ant-design/icons";
 import axios from "axios";
 import moment from "moment";
 
 const Records = () => {
   const [data, setData] = useState();
+
+  const onDelete = (params) => {
+    axios
+      .delete(`http://rhome19.thddns.net:5524/api/job/delete/${params}`)
+      .then(() => {});
+  };
 
   useEffect(() => {
     axios.get("http://rhome19.thddns.net:5524/api/jobs").then((res) => {
@@ -66,12 +72,31 @@ const Records = () => {
     },
     {
       render: (rec) => (
-        <Button
-          style={{ color: "#286efb" }}
-          icon={<FormOutlined />}
-          type="link"
-          href={`/record/edit/${rec.id}`}
-        ></Button>
+        <div>
+          <Button
+            style={{ color: "#286efb" }}
+            icon={<FormOutlined />}
+            type="link"
+            href={`/record/edit/${rec.id}`}
+          ></Button>
+          <Popconfirm
+            title={`Are you sure to delete ${rec.id}`}
+            okText="Yes"
+            cancelText="No"
+            onConfirm={() => {
+              window.location.reload();
+              onDelete(rec.id);
+              message.success("Clicked on Yes");
+            }}
+          >
+            <Button
+              href={`/records`}
+              style={{ color: "#FF4141", textAlign: "right" }}
+              icon={<DeleteOutlined />}
+              type="link"
+            ></Button>
+          </Popconfirm>
+        </div>
       ),
     },
   ];
